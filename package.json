@@ -1,0 +1,33 @@
+{
+  "name": "proto",
+  "version": "0.0.0",
+  "description": "point",
+  "main": "readme.md",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrbcksq/proto.git"
+  },
+  "keywords": [
+    "proto"
+  ],
+  "author": "Ruslan Kisly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrbcksq/proto/issues"
+  },
+  "homepage": "https://github.com/hrbcksq/proto#readme",
+  "devDependencies": {
+    "browser-sync": "^2.10.1",
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-open": "^1.0.0",
+    "gulp-sass": "^2.1.1",
+    "run-sequence": "^1.1.5"
+  }
+}
