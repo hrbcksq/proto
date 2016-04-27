@@ -4,16 +4,27 @@ var gulp = require('gulp'),
 	connect = require('gulp-connect'),
 	clean = require('gulp-clean'),
 	open = require('gulp-open'),
+	typescript = require('gulp-typescript'),
 	runSequence = require('run-sequence');
 
 
 var host = 'localhost';
-var port = '80';
+var port = '5620';
 
 function swallowError(error){  
   console.log(error.toString());
   this.emit('end');
 }
+
+gulp.task('typescript', function(){
+	return gulp.src("source/script/**/*.ts")
+	.pipe(typescript({
+		declaration: true,
+		noExternalResolve: true
+	}).on('error', swallowError))
+	.pipe(gulp.dest('build/scripts'))
+	.pipe(connect.reload());
+});
 
 gulp.task('sass', function(){	
 	return gulp.src("source/style/**/*.sass")
@@ -29,16 +40,17 @@ gulp.task('jade', function(){
 	.pipe(connect.reload());	
 });
 
-gulp.task('copy:script', function(){
-	gulp.src('source/script/**/*').pipe(gulp.dest('build/script')).pipe(connect.reload());		
-});
+// gulp.task('copy:script', function(){
+// 	gulp.src('source/script/**/*').pipe(gulp.dest('build/script')).pipe(connect.reload());		
+// });
 
 gulp.task('copy:lib', function(){
 	gulp.src('source/lib/**/*').pipe(gulp.dest('build/lib')).pipe(connect.reload());	
 });
 
 gulp.task('copy', function(){
-	gulp.start('copy:script', 'copy:lib');
+	// 'copy:script',
+	gulp.start('copy:lib');
 });
 
 gulp.task('connect', function(){
@@ -53,7 +65,7 @@ gulp.task('connect', function(){
 gulp.task('watch', function(){	
 	gulp.watch('source/style/**/*.sass', ['sass']);
 	gulp.watch('source/view/**/*.jade', ['jade']);	
-	gulp.watch('source/script/**/*', ['copy:script']);	
+	gulp.watch('source/script/**/*', ['typescript']);	
 	gulp.watch('source/lib/**/*', ['copy:lib']);	
 });
 
@@ -69,6 +81,6 @@ gulp.task('clean', function(){
 });
 
 gulp.task('default', function(){
-	runSequence('clean', 'connect', ['copy', 'sass', 'jade', 'watch'],'open');
+	runSequence('clean', 'connect', ['copy', 'typescript', 'sass', 'jade', 'watch'],'open');
 	console.log('Success!');			
 });
